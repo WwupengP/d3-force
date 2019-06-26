@@ -4,21 +4,31 @@ This module implements a [velocity Verlet](https://en.wikipedia.org/wiki/Verlet_
 
 该模块实现了一个[速度Verlet](https://en.wikipedia.org/wiki/Verlet_integration)数值积分器，用于模拟粒子上的物理力。模拟被简化：它假定每个步骤的恒定单位时间步长Δt = 1，并且对于所有颗粒，恒定单位质量m = 1。结果，作用在粒子上的力F相当于在时间间隔Δt内的恒定加速度a，并且可以简单地通过增加粒子的速度来模拟，然后将其加到粒子的位置。
 
+In the domain of information visualization, physical simulations are useful for studying [networks](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048) and [hierarchies](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37)!
+
 在信息可视化领域，物理模拟对于研究[网络](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048)和[层次结构](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37)非常有用！
 
 [<img alt="Force Dragging III" src="https://raw.githubusercontent.com/d3/d3-force/master/img/graph.png" width="420" height="219">](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048)[<img alt="Force-Directed Tree" src="https://raw.githubusercontent.com/d3/d3-force/master/img/tree.png" width="420" height="219">](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37)
+
+You can also simulate circles (disks) with collision, such as for [bubble charts](http://www.nytimes.com/interactive/2012/09/06/us/politics/convention-word-counts.html) or [beeswarm plots](http://bl.ocks.org/mbostock/6526445e2b44303eebf21da3b6627320):
 
 您还可以模拟碰撞的圆圈（磁盘），例如[气泡图](http://www.nytimes.com/interactive/2012/09/06/us/politics/convention-word-counts.html)或[贝壳图](http://bl.ocks.org/mbostock/6526445e2b44303eebf21da3b6627320)：
 
 [<img alt="Collision Detection" src="https://raw.githubusercontent.com/d3/d3-force/master/img/collide.png" width="420" height="219">](http://bl.ocks.org/mbostock/31ce330646fa8bcb7289ff3b97aab3f5)[<img alt="Beeswarm" src="https://raw.githubusercontent.com/d3/d3-force/master/img/beeswarm.png" width="420" height="219">](http://bl.ocks.org/mbostock/6526445e2b44303eebf21da3b6627320)
 
+You can even use it as a rudimentary physics engine, say to simulate cloth:
+
 您甚至可以将它用作基本的物理引擎，比如模拟布料：
 
 [<img alt="Force-Directed Lattice" src="https://raw.githubusercontent.com/d3/d3-force/master/img/lattice.png" width="480" height="250">](http://bl.ocks.org/mbostock/1b64ec067fcfc51e7471d944f51f1611)
 
+To use this module, create a [simulation](#simulation) for an array of [nodes](#simulation_nodes), and compose the desired [forces](#simulation_force). Then [listen](#simulation_on) for tick events to render the nodes as they update in your preferred graphics system, such as Canvas or SVG.
+
 要使用此模块，请为[nodes](#simulation_nodes)数组创建[simulation](#simulation)，并组合所需的[forces](#simulation_force)。然后[listen](#simulation_on) tick事件，以便在首选图形系统（如Canvas或SVG）中更新节点时对其进行渲染。
 
-## 安装
+## Installing
+
+If you use NPM, `npm install d3-force`. Otherwise, download the [latest release](https://github.com/d3/d3-force/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-force.v2.min.js) or as part of [D3](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3_force` global is exported:
 
 如果您使用NPM， `npm install d3-force`。否则，请下载[最新版本](https://github.com/d3/d3-force/releases/latest)。您也可以直接从[d3js.org](https://d3js.org)加载，作为[独立库](https://d3js.org/d3-force.v2.min.js)或作为[D3 4.0](https://github.com/d3/d3)的一部分。支持AMD，CommonJS和vanilla环境。在vanilla中，export了一个全局变量`d3_force`：
 
@@ -34,39 +44,65 @@ var simulation = d3.forceSimulation(nodes);
 </script>
 ```
 
+[Try d3-force in your browser.](https://beta.observablehq.com/@mbostock/d3-force-directed-graph)
+
 [在浏览器中尝试使用d3-force。](https://beta.observablehq.com/@mbostock/d3-force-directed-graph)
 
-## API参考
+## API Reference
 
 ### Simulation
 
 <a name="forceSimulation" href="#forceSimulation">#</a> d3.<b>forceSimulation</b>([<i>nodes</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js "Source")
 
+Creates a new simulation with the specified array of [*nodes*](#simulation_nodes) and no [forces](#simulation_force). If *nodes* is not specified, it defaults to the empty array. The simulator [starts](#simulation_restart) automatically; use [*simulation*.on](#simulation_on) to listen for tick events as the simulation runs. If you wish to run the simulation manually instead, call [*simulation*.stop](#simulation_stop), and then call [*simulation*.tick](#simulation_tick) as desired.
+
 使用指定的[*nodes*](#simulation_nodes)数组创建新模拟，但没有[forces](#simulation_force)。如果未指定*nodes*，则默认为空数组。模拟器自动[starts](#simulation_restart) ; 在模拟器运行时使用[*simulation*.on](#simulation_on)监听tick事件。如果您希望手动运行模拟，请调用[*simulation*.stop](#simulation_stop)，然后根据需要调用[*simulation*.tick](#simulation_tick)。
 
 <a name="simulation_restart" href="#simulation_restart">#</a> <i>simulation</i>.<b>restart</b>() [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L86 "Source")
+
+Restarts the simulation’s internal timer and returns the simulation. In conjunction with [*simulation*.alphaTarget](#simulation_alphaTarget) or [*simulation*.alpha](#simulation_alpha), this method can be used to “reheat” the simulation during interaction, such as when dragging a node, or to resume the simulation after temporarily pausing it with [*simulation*.stop](#simulation_stop).
 
 重新启动模拟的内部计时器并返回模拟。会同[*simulation*.alphaTarget](#simulation_alphaTarget)或[*simulation*.alpha](#simulation_alpha)，此方法可用于交互期间为“再热”的仿真，例如拖动节点时一样，或回复使用[*simulation*.stop](#simulation_stop)暂时暂停的模拟器。
 
 <a name="simulation_stop" href="#simulation_stop">#</a> <i>simulation</i>.<b>stop</b>() [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L90 "Source")
 
+Stops the simulation’s internal timer, if it is running, and returns the simulation. If the timer is already stopped, this method does nothing. This method is useful for running the simulation manually; see [*simulation*.tick](#simulation_tick).
+
 停止模拟的内部计时器（如果它正在运行）并返回模拟。如果计时器已经停止，则此方法不执行任何操作。此方法对于手动运行模拟非常有用; 见[*simulation*.tick](#simulation_tick)。
 
 <a name="simulation_tick" href="#simulation_tick">#</a> <i>simulation</i>.<b>tick</b>([<i>iterations</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L38 "Source")
 
+Manually steps the simulation by the specified number of *iterations*, and returns the simulation. If *iterations* is not specified, it defaults to 1 (single step).
+
 通过指定的*iterations*手动执行模拟，并返回模拟。如果未指定*iterations* ，则默认为1（单步）。
+
+For each iteration, it increments the current [*alpha*](#simulation_alpha) by ([*alphaTarget*](#simulation_alphaTarget) - *alpha*) × [*alphaDecay*](#simulation_alphaDecay); then invokes each registered [force](#simulation_force), passing the new *alpha*; then decrements each [node](#simulation_nodes)’s velocity by *velocity* × [*velocityDecay*](#simulation_velocityDecay); lastly increments each node’s position by *velocity*.
 
 对于每次迭代，它将当前的[*alpha*](#simulation_alpha)增加([*alphaTarget*](#simulation_alphaTarget) - *alpha*) × [*alphaDecay*](#simulation_alphaDecay) ; 然后调用每个注册的[force](#simulation_force)，传递新的*alpha*; 然后通过*velocity* × [*velocityDecay*](#simulation_velocityDecay)递减每个[node](#simulation_nodes)的速度 ; 最后通过*velocity*递增每个节点的位置。
 
+This method does not dispatch [events](#simulation_on); events are only dispatched by the internal timer when the simulation is started automatically upon [creation](#forceSimulation) or by calling [*simulation*.restart](#simulation_restart). The natural number of ticks when the simulation is started is ⌈*log*([*alphaMin*](#simulation_alphaMin)) / *log*(1 - [*alphaDecay*](#simulation_alphaDecay))⌉; by default, this is 300.
+
 此方法不会调度[events](#simulation_on) ; 只有在[creation](#forceSimulation)时自动启动模拟或通过调用[*simulation*.restart](#simulation_restart)时，内部计时器才会调度事件。当模拟开始蜱的自然数是⌈*log*([*alphaMin*](#simulation_alphaMin)) / *log*(1 - [*alphaDecay*](#simulation_alphaDecay))⌉; 默认情况下，这是300。
+
+This method can be used in conjunction with [*simulation*.stop](#simulation_stop) to compute a [static force layout](https://bl.ocks.org/mbostock/1667139). For large graphs, static layouts should be computed [in a web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16) to avoid freezing the user interface.
 
 这种方法可以结合使用与[*simulation*.stop](#simulation_stop)来计算[static force layout](https://bl.ocks.org/mbostock/1667139)。对于大型图形，应在[Web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16)中计算静态布局，以避免冻结用户界面。
 
 <a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L94 "Source")
 
+If *nodes* is specified, sets the simulation’s nodes to the specified array of objects, initializing their positions and velocities if necessary, and then [re-initializes](#force_initialize) any bound [forces](#simulation_force); returns the simulation. If *nodes* is not specified, returns the simulation’s array of nodes as specified to the [constructor](#forceSimulation).
+
 如果*nodes* 被指定时，将仿真的节点到指定对象数组，初始化它们的位置，并且如果必要的速度，然后[re-initializes](#force_initialize)任何[forces](#simulation_force) ; 返回模拟。如果未指定*nodes*，则返回指定给[constructor](#forceSimulation)的模拟节点数组。
 
+Each *node* must be an object. The following properties are assigned by the simulation:
+
 每个*node*必须是一个对象。模拟分配以下属性：
+
+* `index` - the node’s zero-based index into *nodes*
+* `x` - the node’s current *x*-position
+* `y` - the node’s current *y*-position
+* `vx` - the node’s current *x*-velocity
+* `vy` - the node’s current *y*-velocity
 
 * `index` - *nodes*的从零开始的索引节点
 * `x` - 节点的当前x位置
@@ -74,43 +110,68 @@ var simulation = d3.forceSimulation(nodes);
 * `vx` - 节点的当前x速度
 * `vy` - 节点的当前y速度
 
+The position ⟨*x*,*y*⟩ and velocity ⟨*vx*,*vy*⟩ may be subsequently modified by [forces](#forces) and by the simulation. If either *vx* or *vy* is NaN, the velocity is initialized to ⟨0,0⟩. If either *x* or *y* is NaN, the position is initialized in a [phyllotaxis arrangement](http://bl.ocks.org/mbostock/11478058), so chosen to ensure a deterministic, uniform distribution around the origin.
+
 位置⟨*x*,*y*⟩和速度velocity⟨*vx*,*vy*⟩可以随后通过改变[forces](#forces)和由模拟。如果*vx*或*vy*是NaN，则速度初始化为⟨0.0⟩。如果*x*或*y*是NaN，则位置以[phyllotaxis arrangement](http://bl.ocks.org/mbostock/11478058)初始化，因此选择该位置以确保在原点周围的确定的均匀分布。
+
+To fix a node in a given position, you may specify two additional properties:
+
+* `fx` - the node’s fixed *x*-position
+* `fy` - the node’s fixed *y*-position
 
 要在给定位置修复节点，您可以指定另外两个属性：
 
 * `fx` - 节点的固定x位置
 * `fy` - 节点的固定y位置
 
+At the end of each [tick](#simulation_tick), after the application of any forces, a node with a defined *node*.fx has *node*.x reset to this value and *node*.vx set to zero; likewise, a node with a defined *node*.fy has *node*.y reset to this value and *node*.vy set to zero. To unfix a node that was previously fixed, set *node*.fx and *node*.fy to null, or delete these properties.
+
 在每个[tick](#simulation_tick)结束时，在应用任何强制之后，具有已定义*node*.fx的节点将*node*.x重置为此值并将*node*.vx设置为零; 同样，具有已定义节点的*node*.fy将*node*.y重置为此值，将节点 *node*.vy设置为零。要解除先前修复的节点，请将node .fx和node .fy设置为null，或删除这些属性。
+
+If the specified array of *nodes* is modified, such as when nodes are added to or removed from the simulation, this method must be called again with the new (or changed) array to notify the simulation and bound forces of the change; the simulation does not make a defensive copy of the specified array.
 
 如果修改了指定的*nodes*数组，例如在模拟中添加或删除节点时，必须使用新的（或更改的）数组再次调用此方法，以通知模拟和绑定的更改力; 模拟不会生成指定数组的防御副本。
 
 <a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L98 "Source")
 
+If *alpha* is specified, sets the current alpha to the specified number in the range [0,1] and returns this simulation. If *alpha* is not specified, returns the current alpha value, which defaults to 1.
+
 如果*alpha* 指定，将当前的α到指定数目的范围为[0,1]，并返回该仿真。如果未指定*alpha*，则返回当前alpha值，默认值为1。
 
 <a name="simulation_alphaMin" href="#simulation_alphaMin">#</a> <i>simulation</i>.<b>alphaMin</b>([<i>min</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L102 "Source")
+
+If *min* is specified, sets the minimum *alpha* to the specified number in the range [0,1] and returns this simulation. If *min* is not specified, returns the current minimum *alpha* value, which defaults to 0.001. The simulation’s internal timer stops when the current [*alpha*](#simulation_alpha) is less than the minimum *alpha*. The default [alpha decay rate](#simulation_alphaDecay) of ~0.0228 corresponds to 300 iterations.
 
 如果指定了*min*，则将最小*alpha*设置为[0,1]范围内的指定数字并返回此模拟。如果未指定*min*，则返回当前最小*alpha*值，默认值为0.001。当前[*alpha*](#simulation_alpha)小于最小*alpha*时，模拟的内部计时器停止。默认的 [alpha decay rate](#simulation_alphaDecay) ~0.0228对应于300次迭代。
 
 <a name="simulation_alphaDecay" href="#simulation_alphaDecay">#</a> <i>simulation</i>.<b>alphaDecay</b>([<i>decay</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L106 "Source")
 
+If *decay* is specified, sets the [*alpha*](#simulation_alpha) decay rate to the specified number in the range [0,1] and returns this simulation. If *decay* is not specified, returns the current *alpha* decay rate, which defaults to 0.0228… = 1 - *pow*(0.001, 1 / 300) where 0.001 is the default [minimum *alpha*](#simulation_alphaMin).
+
 如果*decay*指定，设置[*alpha*](#simulation_alpha)衰减率在范围[0,1]指定数量，并返回该仿真。如果未指定*decay*，则返回当前的*alpha*衰减率，默认为0.0228 ... = 1 - pow（0.001,1 / 300），其中0.001是默认的[minimum *alpha*](#simulation_alphaMin)。
+
+The alpha decay rate determines how quickly the current alpha interpolates towards the desired [target *alpha*](#simulation_alphaTarget); since the default target *alpha* is zero, by default this controls how quickly the simulation cools. Higher decay rates cause the simulation to stabilize more quickly, but risk getting stuck in a local minimum; lower values cause the simulation to take longer to run, but typically converge on a better layout. To have the simulation run forever at the current *alpha*, set the *decay* rate to zero; alternatively, set a [target *alpha*](#simulation_alphaTarget) greater than the [minimum *alpha*](#simulation_alphaMin).
 
 alpha衰减率决定了当前alpha插入所需[target *alpha*]的速度 ; 由于默认目标*alpha*为零，因此默认情况下它控制模拟冷却的速度。较高的衰减率会使模拟更快地稳定，但有可能陷入局部最小值; 较低的值会导致模拟运行时间更长，但通常会收敛到更好的布局。要使模拟永远在当前alpha运行，请将衰减率设置为零; 或者，将[target *alpha*](#simulation_alphaTarget)设置为大于[minimum *alpha*](#simulation_alphaMin)。
 
 <a name="simulation_alphaTarget" href="#simulation_alphaTarget">#</a> <i>simulation</i>.<b>alphaTarget</b>([<i>target</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L110 "Source")
+
+If *target* is specified, sets the current target [*alpha*](#simulation_alpha) to the specified number in the range [0,1] and returns this simulation. If *target* is not specified, returns the current target alpha value, which defaults to 0.
 
 如果指定*target*，将当前的目标的[*alpha*](#simulation_alpha)到指定数目的范围为[0,1]，并返回该仿真。
 如果未指定*target*，则返回当前目标alpha值，默认值为0。
 
 <a name="simulation_velocityDecay" href="#simulation_velocityDecay">#</a> <i>simulation</i>.<b>velocityDecay</b>([<i>decay</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L114 "Source")
 
+If *decay* is specified, sets the velocity decay factor to the specified number in the range [0,1] and returns this simulation. If *decay* is not specified, returns the current velocity decay factor, which defaults to 0.4. The decay factor is akin to atmospheric friction; after the application of any forces during a [tick](#simulation_tick), each node’s velocity is multiplied by 1 - *decay*. As with lowering the [alpha decay rate](#simulation_alphaDecay), less velocity decay may converge on a better solution, but risks numerical instabilities and oscillation.
+
 如果*decay*指定，设定速度衰减因子，以在范围[0,1]指定数量，并返回该仿真。
 如果未指定*decay*，则返回当前速度衰减因子，默认值为0.4。
 衰变因子类似于大气摩擦; 在[tick](#simulation_tick)期间施加任何力之后，每个节点的速度乘以1 - *decay*。与降低[alpha decay rate](#simulation_alphaDecay)一样，较小的速度衰减可能会收敛于更好的解决方案，但存在数值不稳定性和振荡的风险。
 
 <a name="simulation_force" href="#simulation_force">#</a> <i>simulation</i>.<b>force</b>(<i>name</i>[, <i>force</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L118 "Source")
+
+If *force* is specified, assigns the [force](#forces) for the specified *name* and returns this simulation. If *force* is not specified, returns the force with the specified name, or undefined if there is no such force. (By default, new simulations have no forces.) For example, to create a new simulation to layout a graph, you might say:
 
 如果*force*指定，分配[force](#forces)指定的*name*，并返回该模拟。
 如果未指定*force*，则返回具有指定名称的force，如果没有此类force，则返回undefined。（默认情况下，新模拟没有forces。）例如，要创建新的模拟来布局图形，您可能会说：
@@ -122,6 +183,8 @@ var simulation = d3.forceSimulation(nodes)
     .force("center", d3.forceCenter());
 ```
 
+To remove the force with the given *name*, pass null as the *force*. For example, to remove the charge force:
+
 要删除具有给定*name*的force，请将null作为力传递。例如，要名为*charge*的*force*：
 
 ```js
@@ -130,21 +193,31 @@ simulation.force("charge", null);
 
 <a name="simulation_find" href="#simulation_find">#</a> <i>simulation</i>.<b>find</b>(<i>x</i>, <i>y</i>[, <i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L122 "Source")
 
+Returns the node closest to the position ⟨*x*,*y*⟩ with the given search *radius*. If *radius* is not specified, it defaults to infinity. If there is no node within the search area, returns undefined.
+
 返回节点最接近位置⟨*x*,*y*⟩与给定的搜索*radius*。
 如果未指定*radius*，则默认为无穷大。
 如果搜索区域内没有节点，则返回undefined。
 
 <a name="simulation_on" href="#simulation_on">#</a> <i>simulation</i>.<b>on</b>(<i>typenames</i>, [<i>listener</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L145 "Source")
 
+If *listener* is specified, sets the event *listener* for the specified *typenames* and returns this simulation. If an event listener was already registered for the same type and name, the existing listener is removed before the new listener is added. If *listener* is null, removes the current event listeners for the specified *typenames*, if any. If *listener* is not specified, returns the first currently-assigned listener matching the specified *typenames*, if any. When a specified event is dispatched, each *listener* will be invoked with the `this` context as the simulation.
+
 如果*listener*指定，设置事件*listener*指定的*typenames*并返回此模拟。如果事件侦听器已经注册了相同的类型和名称，则在添加新侦听器之前将删除现有侦听器。
 如果*listener*为null，则删除指定类型名称的当前事件侦听器（如果有）。如果听者没有指定，返回第一个当前分配的听众匹配指定 *typenames*，如果有的话。调度指定的事件时，将使用上下文作为模拟调用每个侦听器`this`。
+
+The *typenames* is a string containing one or more *typename* separated by whitespace. Each *typename* is a *type*, optionally followed by a period (`.`) and a *name*, such as `tick.foo` and `tick.bar`; the name allows multiple listeners to be registered for the same *type*. The *type* must be one of the following:
 
 所述*typenames* 是含有一个或多个字符串类型名由空格分隔。每个*typename*都是一个*type*，可选地后跟一个句点（.）和一个 *name*，例如 `tick.foo`和`tick.bar`; 该名称允许多个侦听器注册相同的*type*。该*type* 必须是下列之一：
 
 * `tick` - 在模拟内部计时器的每个滴答之后。
 * `end` -  模拟的计时器在*alpha* < [*alphaMin*](#simulation_alphaMin)时停止。
 
+Note that *tick* events are not dispatched when [*simulation*.tick](#simulation_tick) is called manually; events are only dispatched by the internal timer and are intended for interactive rendering of the simulation. To affect the simulation, register [forces](#simulation_force) instead of modifying nodes’ positions or velocities inside a tick event listener.
+
 请注意，手动调用[*simulation*.tick](#simulation_tick)时不会调度 *tick*事件; 事件仅由内部计时器调度，用于模拟的交互式渲染。要影响模拟，请注册[forces](#simulation_force)而不是修改节点事件侦听器内的节点位置或速度。
+
+See [*dispatch*.on](https://github.com/d3/d3-dispatch#dispatch_on) for details.
 
 有关详细信息，请参阅[*dispatch*.on](https://github.com/d3/d3-dispatch#dispatch_on)。
 
