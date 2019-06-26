@@ -182,29 +182,28 @@ Forces可以选择实现[*force*.initialize](#force_initialize)来接收模拟�
 
 #### Centering
 
-The centering force translates nodes uniformly so that the mean position of all nodes (the center of mass if all nodes have equal weight) is at the given position ⟨[*x*](#center_x),[*y*](#center_y)⟩. This force modifies the positions of nodes on each application; it does not modify velocities, as doing so would typically cause the nodes to overshoot and oscillate around the desired center. This force helps keeps nodes in the center of the viewport, and unlike the [positioning force](#positioning), it does not distort their relative positions.
-
 定心力转换节点均匀，使得所有节点的平均位置（重心如果所有节点都具有相同的权重）是在给定位置⟨[*x*](#center_x),[*y*](#center_y)⟩。该力修改每个应用程序上节点的位置; 它不会改变速度，因为这样做通常会导致节点过冲并围绕所需的中心振荡。此力有助于将节点保持在视口的中心，与定位力[positioning force](#positioning)不同，它不会扭曲它们的相对位置。
 
 <a name="forceCenter" href="#forceCenter">#</a> d3.<b>forceCenter</b>([<i>x</i>, <i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L1 "Source")
 
-Creates a new centering force with the specified [*x*-](#center_x) and [*y*-](#center_y) coordinates. If *x* and *y* are not specified, they default to ⟨0,0⟩.
+创建具有指定一个新的定心力[*x*-](#center_x)和[*y*-](#center_y)坐标。如果未指定*x* 和 *y*，则默认为⟨0,0⟩。
 
 <a name="center_x" href="#center_x">#</a> <i>center</i>.<b>x</b>([<i>x</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L27 "Source")
 
-If *x* is specified, sets the *x*-coordinate of the centering position to the specified number and returns this force. If *x* is not specified, returns the current *x*-coordinate, which defaults to zero.
+如果*x*指定，设置*x*的中心位置到指定号码，并返回这股力量-协调。如果未指定*x*，则返回当前*x*坐标，默认为0。
 
 <a name="center_y" href="#center_y">#</a> <i>center</i>.<b>y</b>([<i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L31 "Source")
 
-If *y* is specified, sets the *y*-coordinate of the centering position to the specified number and returns this force. If *y* is not specified, returns the current *y*-coordinate, which defaults to zero.
+如果 *y* 指定，设置 *y* 居中位置到指定数量的-协调并返回此力。如果未指定*y*，则返回当前*y*坐标，默认为0。
 
 #### Collision
 
-The collision force treats nodes as circles with a given [radius](#collide_radius), rather than points, and prevents nodes from overlapping. More formally, two nodes *a* and *b* are separated so that the distance between *a* and *b* is at least *radius*(*a*) + *radius*(*b*). To reduce jitter, this is by default a “soft” constraint with a configurable [strength](#collide_strength) and [iteration count](#collide_iterations).
+碰撞力将节点视为具有给定半径[radius](#collide_radius)而不是点的圆，并防止节点重叠。更正式地，两个节点*a* 和 *b*被分开，使得*a* 和 *b*之间的距离至少是*radius*(*a*) + *radius*(*b*)。为了减少抖动，默认情况下这是一个具有可配置强度[strength](#collide_strength)和迭代计数[iteration count](#collide_iterations)的“软”约束。
 
 <a name="forceCollide" href="#forceCollide">#</a> d3.<b>forceCollide</b>([<i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js "Source")
 
 Creates a new circle collision force with the specified [*radius*](#collide_radius). If *radius* is not specified, it defaults to the constant one for all nodes.
+创建具有指定半径的新圆碰撞力。如果未指定radius，则默认为所有节点的常量。
 
 <a name="collide_radius" href="#collide_radius">#</a> <i>collide</i>.<b>radius</b>([<i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js#L86 "Source")
 
