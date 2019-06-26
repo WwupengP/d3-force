@@ -44,21 +44,21 @@ var simulation = d3.forceSimulation(nodes);
 
 <a name="simulation_restart" href="#simulation_restart">#</a> <i>simulation</i>.<b>restart</b>() [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L86 "Source")
 
-Restarts the simulation’s internal timer and returns the simulation. In conjunction with [*simulation*.alphaTarget](#simulation_alphaTarget) or [*simulation*.alpha](#simulation_alpha), this method can be used to “reheat” the simulation during interaction, such as when dragging a node, or to resume the simulation after temporarily pausing it with [*simulation*.stop](#simulation_stop).
+重新启动模拟的内部计时器并返回模拟。会同[*simulation*.alphaTarget](#simulation_alphaTarget)或[*simulation*.alpha](#simulation_alpha)，此方法可用于交互期间为“再热”的仿真，例如拖动节点时一样，或回复使用[*simulation*.stop](#simulation_stop)暂时暂停的模拟器。
 
 <a name="simulation_stop" href="#simulation_stop">#</a> <i>simulation</i>.<b>stop</b>() [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L90 "Source")
 
-Stops the simulation’s internal timer, if it is running, and returns the simulation. If the timer is already stopped, this method does nothing. This method is useful for running the simulation manually; see [*simulation*.tick](#simulation_tick).
+停止模拟的内部计时器（如果它正在运行）并返回模拟。如果计时器已经停止，则此方法不执行任何操作。此方法对于手动运行模拟非常有用; 见[*simulation*.tick](#simulation_tick)。
 
 <a name="simulation_tick" href="#simulation_tick">#</a> <i>simulation</i>.<b>tick</b>([<i>iterations</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L38 "Source")
 
-Manually steps the simulation by the specified number of *iterations*, and returns the simulation. If *iterations* is not specified, it defaults to 1 (single step).
+通过指定的*iterations*手动执行模拟，并返回模拟。如果未指定*iterations* ，则默认为1（单步）。
 
-For each iteration, it increments the current [*alpha*](#simulation_alpha) by ([*alphaTarget*](#simulation_alphaTarget) - *alpha*) × [*alphaDecay*](#simulation_alphaDecay); then invokes each registered [force](#simulation_force), passing the new *alpha*; then decrements each [node](#simulation_nodes)’s velocity by *velocity* × [*velocityDecay*](#simulation_velocityDecay); lastly increments each node’s position by *velocity*.
+对于每次迭代，它将当前的[*alpha*](#simulation_alpha)增加([*alphaTarget*](#simulation_alphaTarget) - *alpha*) × [*alphaDecay*](#simulation_alphaDecay) ; 然后调用每个注册的[force](#simulation_force)，传递新的*alpha*; 然后通过*velocity* × [*velocityDecay*](#simulation_velocityDecay)递减每个[node](#simulation_nodes)的速度 ; 最后通过*velocity*递增每个节点的位置。
 
-This method does not dispatch [events](#simulation_on); events are only dispatched by the internal timer when the simulation is started automatically upon [creation](#forceSimulation) or by calling [*simulation*.restart](#simulation_restart). The natural number of ticks when the simulation is started is ⌈*log*([*alphaMin*](#simulation_alphaMin)) / *log*(1 - [*alphaDecay*](#simulation_alphaDecay))⌉; by default, this is 300.
+此方法不会调度[events](#simulation_on) ; 只有在[creation](#forceSimulation)时自动启动模拟或通过调用[*simulation*.restart](#simulation_restart)时，内部计时器才会调度事件。当模拟开始蜱的自然数是⌈*log*([*alphaMin*](#simulation_alphaMin)) / *log*(1 - [*alphaDecay*](#simulation_alphaDecay))⌉; 默认情况下，这是300。
 
-This method can be used in conjunction with [*simulation*.stop](#simulation_stop) to compute a [static force layout](https://bl.ocks.org/mbostock/1667139). For large graphs, static layouts should be computed [in a web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16) to avoid freezing the user interface.
+这种方法可以结合使用与[*simulation*.stop](#simulation_stop)来计算[static force layout](https://bl.ocks.org/mbostock/1667139)。对于大型图形，应在[Web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16)中计算静态布局，以避免冻结用户界面
 
 <a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L94 "Source")
 
