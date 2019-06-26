@@ -1,6 +1,6 @@
 # d3-force
 
-This module implements a [velocity Verlet](https://en.wikipedia.org/wiki/Verlet_integration) numerical integrator for simulating physical forces on particles. The simulation is simplified: it assumes a constant unit time step Δ*t* = 1 for each step, and a constant unit mass *m* = 1 for all particles. As a result, a force *F* acting on a particle is equivalent to a constant acceleration *a* over the time interval Δ*t*, and can be simulated simply by adding to the particle’s velocity, which is then added to the particle’s position.
+该模块实现了一个[速度Verlet](https://en.wikipedia.org/wiki/Verlet_integration)数值积分器，用于模拟粒子上的物理力。模拟被简化：它假定每个步骤的恒定单位时间步长Δt = 1，并且对于所有颗粒，恒定单位质量m = 1。结果，作用在粒子上的力F相当于在时间间隔Δt内的恒定加速度a，并且可以简单地通过增加粒子的速度来模拟，然后将其加到粒子的位置。
 
 In the domain of information visualization, physical simulations are useful for studying [networks](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048) and [hierarchies](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37)!
 
