@@ -386,20 +386,23 @@ If *iterations* is specified, sets the number of iterations per application to t
 
 The link force pushes linked nodes together or apart according to the desired [link distance](#link_distance). The strength of the force is proportional to the difference between the linked nodes’ distance and the target distance, similar to a spring force.
 
-链接力根据期望的链接距离[link distance](#link_distance)将链接的节点推到一起或分开。力的强度与链节点的距离和目标距离之间的差值成比例，类似于弹簧力。
+链接力根据期望的链接距离 [link distance](#link_distance) 将链接的节点推到一起或分开。力的强度与链节点的距离和目标距离之间的差值成比例，类似于弹簧力。
 
 <a name="forceLink" href="#forceLink">#</a> d3.<b>forceLink</b>([<i>links</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js "Source")
 
 Creates a new link force with the specified *links* and default parameters. If *links* is not specified, it defaults to the empty array.
 
-使用指定的链接 *links* 和默认参数创建新的链接强制。如果未指定链接 *links*，则默认为空数组。
+使用指定的链接 **links** 和默认参数创建新的链接力。
+
+如果未指定链接 **links**，则默认为空数组。
 
 <a name="link_links" href="#link_links">#</a> <i>link</i>.<b>links</b>([<i>links</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L92 "Source")
 
 If *links* is specified, sets the array of links associated with this force, recomputes the [distance](#link_distance) and [strength](#link_strength) parameters for each link, and returns this force. If *links* is not specified, returns the current array of links, which defaults to the empty array.
 
-如果链接 *links* 被指定时，将与该力相关联的链接阵列，重新计算距离[distance](#link_distance)和强度[strength](#link_strength)参数对于每个链路，并返回该力。
-如果未指定 *links*，则返回当前链接数组，默认为空数组。
+如果链接 **links** 被指定时，设置与该力相关联的链接阵列，对于每个链路重新计算距离 [distance](#link_distance) 和强度 [strength](#link_strength) 参数，并返回该力。
+
+如果未指定 **links**，则返回当前链接数组，默认为空数组。
 
 Each link is an object with the following properties:
 
@@ -409,13 +412,13 @@ Each link is an object with the following properties:
 * `target` - the link’s target node; see [*simulation*.nodes](#simulation_nodes)
 * `index` - the zero-based index into *links*, assigned by this method
 
-* `source` - 链接的源节点; 见 [*simulation*.nodes](#simulation_nodes)
-* `target` - 链接的目标节点; 见 [*simulation*.nodes](#simulation_nodes)
-* `index` - 通过此方法分配的在 *links* 中基于0的索引
+* `source` - 链接的源节点; 见 [**simulation**.nodes](#simulation_nodes)
+* `target` - 链接的目标节点; 见 [**simulation**.nodes](#simulation_nodes)
+* `index` - 通过此方法分配的在 **links** 中基于0的索引
 
 For convenience, a link’s source and target properties may be initialized using numeric or string identifiers rather than object references; see [*link*.id](#link_id). When the link force is [initialized](#force_initialize) (or re-initialized, as when the nodes or links change), any *link*.source or *link*.target property which is *not* an object is replaced by an object reference to the corresponding *node* with the given identifier.
 
-为方便起见，可以使用数字或字符串标识符而不是对象引用来初始化链接的源和目标属性; 见[*link*.id](#link_id)。当链接力初始化[initialized](#force_initialize)（或重新初始化，如节点或链接发生更改时）时，任何 *不是* 对象的 *link*.source 或 *link*.target 属性都将被对象引用替换为具有给定标识符的相应节点 *node*。
+为方便起见，可以使用数字或字符串标识符而不是对象引用来初始化链接的源和目标属性; 见 [**link**.id](#link_id) 。当链接力初始化 [initialized](#force_initialize) （或重新初始化，如节点或链接发生更改时）时，任何 **不是** 对象的 **link**.source 或 **link**.target 属性都将被对象引用替换为具有给定标识符的相应节点 **node**。
 
 If the specified array of *links* is modified, such as when links are added to or removed from the simulation, this method must be called again with the new (or changed) array to notify the force of the change; the force does not make a defensive copy of the specified array.
 
@@ -423,8 +426,9 @@ If the specified array of *links* is modified, such as when links are added to o
 
 If *id* is specified, sets the node id accessor to the specified function and returns this force. If *id* is not specified, returns the current node id accessor, which defaults to the numeric *node*.index:
 
-如果 *id* 指定，设置节点ID访问到指定的函数，并返回这股力量。
-如果未指定 *id* ，则返回当前节点id访问器，默认为数字 *node*.index：
+如果 **id** 指定，设置节点ID访问到指定的函数，并返回force。
+
+如果未指定 **id** ，则返回当前节点id访问器，默认为数字 **node**.index：
 
 ```js
 function id(d) {
@@ -434,7 +438,7 @@ function id(d) {
 
 The default id accessor allows each link’s source and target to be specified as a zero-based index into the [nodes](#simulation_nodes) array. For example:
 
-默认的id访问器允许将每个链接的源和目标指定为 [nodes](#simulation_nodes) 数组中从零开始的索引。例如：
+默认的id访问器允许将每个链接的源和目标指定为 [nodes](#simulation_nodes) 数组中从0开始的索引。例如：
 
 ```js
 var nodes = [
@@ -478,7 +482,7 @@ var links = [
 
 This is particularly useful when representing graphs in JSON, as JSON does not allow references. See [this example](http://bl.ocks.org/mbostock/f584aa36df54c451c94a9d0798caed35).
 
-这在使用JSON表示图形时特别有用，因为JSON不允许引用。看这个[例子](http://bl.ocks.org/mbostock/f584aa36df54c451c94a9d0798caed35)。
+这在使用JSON表示图形时特别有用，因为JSON不允许引用。看这个 [例子](http://bl.ocks.org/mbostock/f584aa36df54c451c94a9d0798caed35) 。
 
 The id accessor is invoked for each node whenever the force is initialized, as when the [nodes](#simulation_nodes) or [links](#link_links) change, being passed the node and its zero-based index.
 
@@ -486,10 +490,11 @@ The id accessor is invoked for each node whenever the force is initialized, as w
 
 <a name="link_distance" href="#link_distance">#</a> <i>link</i>.<b>distance</b>([<i>distance</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L108 "Source")
 
-If *distance* is specified, sets the distance accessor to the specified number or function, re-evaluates the distance accessor for each link, and returns this force. If *distance* is not specified, returns the current distance accessor, which defaults to:
+If **distance** is specified, sets the distance accessor to the specified number or function, re-evaluates the distance accessor for each link, and returns this force. If *distance* is not specified, returns the current distance accessor, which defaults to:
 
-如果距离 *distance* 指定，设定距离存取到指定的数或功能，重新评估每个链路的距离存取，并返回该力。
-如果未指定距离 *distance* ，则返回当前距离访问者，默认为：
+如果距离 **distance** 指定，设定距离访问器为指定的数值或函数，重新评估每个链路的距离访问器，并返回force。
+
+如果未指定距离 **distance** ，则返回当前距离访问者，默认为：
 
 ```js
 function distance() {
@@ -499,14 +504,15 @@ function distance() {
 
 The distance accessor is invoked for each [link](#link_links), being passed the *link* and its zero-based *index*. The resulting number is then stored internally, such that the distance of each link is only recomputed when the force is initialized or when this method is called with a new *distance*, and not on every application of the force.
 
-为每个链接 [link](#link_links) 调用距离访问器，传递链接 *link* 及其从零开始的索引 *index* 。然后在内部存储所得到的数字，使得每个链接的距离仅在初始化力时或者以新距离 *distance* 调用该方法时重新计算，而不是在力的每个应用上调用。
+为每个链接 [link](#link_links) 调用距离访问器，传递链接 **link** 及其从0开始的索引 **index** 。然后在内部存储所得到的数字，使得每个链接的距离仅在初始化力时或者以新距离 **distance** 调用该方法时重新计算，而不是在力的每个应用上调用。
 
 <a name="link_strength" href="#link_strength">#</a> <i>link</i>.<b>strength</b>([<i>strength</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L104 "Source")
 
 If *strength* is specified, sets the strength accessor to the specified number or function, re-evaluates the strength accessor for each link, and returns this force. If *strength* is not specified, returns the current strength accessor, which defaults to:
 
-如果强度 *strength* 指定，设置强度访问到指定的号码或功能，重新评估每一个环节的实力访问，并返回此力。
-如果未指定 *strength* ，则返回当前强度访问器，默认为：
+如果强度 **strength** 指定，设置强度访问器为指定的数值或函数，重新评估每一个环节的力访问器，并返回force。
+
+如果未指定 **strength** ，则返回当前强度访问器，默认为：
 
 ```js
 function strength(link) {
@@ -516,28 +522,29 @@ function strength(link) {
 
 Where *count*(*node*) is a function that returns the number of links with the given node as a source or target. This default was chosen because it automatically reduces the strength of links connected to heavily-connected nodes, improving stability.
 
-其中 *count(node)* 是一个函数，它返回给定节点作为源或目标的链接数。选择此默认值是因为它会自动降低连接到重度连接节点的链路强度，从而提高稳定性。
+其中 **count(node)** 是一个函数，它返回给定节点作为源或目标的链接数。选择此默认值是因为它会自动降低连接到重度连接节点的链路强度，从而提高稳定性。
 
 The strength accessor is invoked for each [link](#link_links), being passed the *link* and its zero-based *index*. The resulting number is then stored internally, such that the strength of each link is only recomputed when the force is initialized or when this method is called with a new *strength*, and not on every application of the force.
 
-为每个链接 [link](#link_links) 调用strength访问器，传递链接 *link* 及其从零开始的索引 *index* 。然后在内部存储所得到的数字，使得每个链接的强度仅在初始化力时或者以新强度 *strength* 调用该方法时重新计算，而不是在力的每个应用上调用。
+为每个链接 [link](#link_links) 调用strength访问器，传递链接 **link** 及其从0开始的索引 **index** 。然后在内部存储所得到的数字，使得每个链接的强度仅在初始化力时或者以新强度 *strength* 调用该方法时重新计算，而不是在力的每个应用上调用。
 
 <a name="link_iterations" href="#link_iterations">#</a> <i>link</i>.<b>iterations</b>([<i>iterations</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L100 "Source")
 
 If *iterations* is specified, sets the number of iterations per application to the specified number and returns this force. If *iterations* is not specified, returns the current iteration count which defaults to 1. Increasing the number of iterations greatly increases the rigidity of the constraint and is useful for [complex structures such as lattices](http://bl.ocks.org/mbostock/1b64ec067fcfc51e7471d944f51f1611), but also increases the runtime cost to evaluate the force.
 
-如果迭代 *iterations* 指定，设置每个应用迭代到指定号码的数量和返回这股力量。
-如果未指定迭代 *iterations* ，则返回默认为1的当前迭代计数。增加迭代次数会大大增加约束的刚性，并且对[格子等复杂结构](http://bl.ocks.org/mbostock/1b64ec067fcfc51e7471d944f51f1611)非常有用，但也会增加运行时成本以评估力。
+如果迭代 **iterations** 指定，设置每个应用的迭代次数为指定数值并返回force。
+
+如果未指定迭代次数 **iterations** ，则返回当前迭代计数，默认值为1。增加迭代次数会大大增加约束的刚性，并且对 [格子等复杂结构](http://bl.ocks.org/mbostock/1b64ec067fcfc51e7471d944f51f1611) 非常有用，但也会增加运行时成本以评估力。
 
 #### Many-Body
 
 The many-body (or *n*-body) force applies mutually amongst all [nodes](#simulation_nodes). It can be used to simulate gravity (attraction) if the [strength](#manyBody_strength) is positive, or electrostatic charge (repulsion) if the strength is negative. This implementation uses quadtrees and the [Barnes–Hut approximation](https://en.wikipedia.org/wiki/Barnes–Hut_simulation) to greatly improve performance; the accuracy can be customized using the [theta](#manyBody_theta) parameter.
 
-多体（或n体）力在所有节点 [nodes](#simulation_nodes) 之间相互应用。如果强度 [strength](#manyBody_strength) 为正，它可用于模拟重力（吸引力），如果强度为负，则可用于模拟静电荷（排斥）。该实现使用四叉树和 [Barnes-Hut近似](https://en.wikipedia.org/wiki/Barnes–Hut_simulation) 来大大提高性能; 可以使用 [theta](#manyBody_theta) 参数自定义精度。
+多体（或n体）力在所有节点 [nodes](#simulation_nodes) 之间相互应用。如果强度 [strength](#manyBody_strength) 为正，它可用于模拟重力（吸引力），如果强度为负，则可用于模拟静电荷（排斥）。该实现使用 ** 四叉树(quadtrees)** 和 [Barnes-Hut近似](https://en.wikipedia.org/wiki/Barnes–Hut_simulation) 来大大提高性能; 可以使用 [theta](#manyBody_theta) 参数自定义精度。
 
 Unlike links, which only affect two linked nodes, the charge force is global: every node affects every other node, even if they are on disconnected subgraphs.
 
-与仅影响两个链接节点的链接不同，充电力是全局的：每个节点都会影响所有其他节点，即使它们位于断开连接的子图上。
+与仅影响两个链接节点的链接不同，charge force 是全局的：每个节点都会影响所有其他节点，即使它们位于断开连接的子图上。
 
 <a name="forceManyBody" href="#forceManyBody">#</a> d3.<b>forceManyBody</b>() [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js "Source")
 
@@ -549,8 +556,9 @@ Creates a new many-body force with the default parameters.
 
 If *strength* is specified, sets the strength accessor to the specified number or function, re-evaluates the strength accessor for each node, and returns this force. A positive value causes nodes to attract each other, similar to gravity, while a negative value causes nodes to repel each other, similar to electrostatic charge. If *strength* is not specified, returns the current strength accessor, which defaults to:
 
-如果强度 *strength* 指定，设定强度存取到指定的数或功能，重新评估每个节点的强度存取，并返回该力。正值使节点彼此吸引，类似于重力，而负值导致节点相互排斥，类似于静电电荷。
-如果未指定 *strength* ，则返回当前强度访问器，默认为：
+如果强度 **strength** 指定，设定强度访问器为指定的数或函数，重新评估每个节点的强度访问器，并返回force。正值使节点彼此吸引，类似于重力，而负值导致节点相互排斥，类似于静电电荷。
+
+如果未指定 **strength** ，则返回当前强度访问器，默认为：
 
 ```js
 function strength() {
@@ -560,18 +568,19 @@ function strength() {
 
 The strength accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the strength of each node is only recomputed when the force is initialized or when this method is called with a new *strength*, and not on every application of the force.
 
-为模拟中的每个节点 [node](#simulation_nodes) 调用强度访问器，传递节点 *node* 及其从零开始的索引 *index* 。然后在内部存储得到的数字，使得每个节点的强度仅在初始化力时或者以新的力量 *strength* 调用该方法时重新计算，而不是在力的每个应用上调用。
+为模拟中的每个节点 [node](#simulation_nodes) 调用强度访问器，传递节点 **node** 及其从0开始的索引 **index** 。然后在内部存储得到的数字，使得每个节点的强度仅在初始化力时或者以新的力量 **strength** 调用该方法时重新计算，而不是在力的每个应用上调用。
 
 <a name="manyBody_theta" href="#manyBody_theta">#</a> <i>manyBody</i>.<b>theta</b>([<i>theta</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js#L109 "Source")
 
 If *theta* is specified, sets the Barnes–Hut approximation criterion to the specified number and returns this force. If *theta* is not specified, returns the current value, which defaults to 0.9.
 
-如果指定了*theta*，则将Barnes-Hut近似标准设置为指定的数字并返回此力。
-如果未指定*theta*，则返回当前值，默认值为0.9。
+如果指定了 **theta**，则将 Barnes-Hut近似标准 设置为指定的数字并返回force。
+
+如果未指定 **theta** ，则返回当前值，默认值为0.9。
 
 To accelerate computation, this force implements the [Barnes–Hut approximation](http://en.wikipedia.org/wiki/Barnes–Hut_simulation) which takes O(*n* log *n*) per application where *n* is the number of [nodes](#simulation_nodes). For each application, a [quadtree](https://github.com/d3/d3-quadtree) stores the current node positions; then for each node, the combined force of all other nodes on the given node is computed. For a cluster of nodes that is far away, the charge force can be approximated by treating the cluster as a single, larger node. The *theta* parameter determines the accuracy of the approximation: if the ratio *w* / *l* of the width *w* of the quadtree cell to the distance *l* from the node to the cell’s center of mass is less than *theta*, all nodes in the given cell are treated as a single node rather than individually.
 
-为了加速计算，该力实现了[Barnes-Hut近似](http://en.wikipedia.org/wiki/Barnes–Hut_simulation)，每个应用需要 O(*n* log *n*) ，其中 *n* 是节点 [nodes](#simulation_nodes) 数。对于每个应用程序，四叉树[quadtree](https://github.com/d3/d3-quadtree)存储当前节点位置; 然后，对于每个节点，计算给定节点上所有其他节点的合并力。对于远处的节点集群，可以通过将集群视为单个较大节点来近似计算充电力。所述 *theta* 参数决定近似的精度：如果比率 *w* / *l* 的宽度 *w* 的瓦特四叉树细胞对所述距离 *l* 从节点到单元的质心小于 *theta* ，给定单元中的所有节点都被视为单个节点而不是单独节点。
+为了加速计算，该力实现了 [Barnes-Hut近似](http://en.wikipedia.org/wiki/Barnes–Hut_simulation) ，每个应用需要 **O(n log(n))** ，其中 **n** 是节点 [nodes](#simulation_nodes) 数。对于每个应用程序，四叉树 [quadtree](https://github.com/d3/d3-quadtree) 存储当前节点位置; 然后，对于每个节点，计算给定节点上所有其他节点的合并力。对于远处的节点集群，可以通过将集群视为单个较大节点来近似计算充电力。所述 **theta** 参数决定近似的精度：如果比率 **w / l** 的宽度 **w** 的瓦特四叉树细胞对所述距离 *l* 从节点到单元的质心小于 *theta* ，给定单元中的所有节点都被视为单个节点而不是单独节点。
 
 <a name="manyBody_distanceMin" href="#manyBody_distanceMin">#</a> <i>manyBody</i>.<b>distanceMin</b>([<i>distance</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js#L101 "Source")
 
