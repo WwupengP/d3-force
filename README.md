@@ -307,6 +307,8 @@ Creates a new circle collision force with the specified [*radius*](#collide_radi
 
 If *radius* is specified, sets the radius accessor to the specified number or function, re-evaluates the radius accessor for each node, and returns this force. If *radius* is not specified, returns the current radius accessor, which defaults to:
 
+如果 *radius* 指定，设定 *radius* 存取到指定的数或功能，重新评估每个节点的半径存取，并返回该力。如果未指定 *radius* ，则返回当前半径访问器，默认为：
+
 ```js
 function radius() {
   return 1;
@@ -315,9 +317,13 @@ function radius() {
 
 The radius accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the radius of each node is only recomputed when the force is initialized or when this method is called with a new *radius*, and not on every application of the force.
 
+为模拟中的每个节点[node](#simulation_nodes)调用radius访问器，传递节点*node*及其从零开始的索引*index*。然后将结果数存储在内部，这样每个节点的半径仅在初始化力时或者使用新*radius*调用此方法时重新计算，而不是在力的每个应用上调用。
+
 <a name="collide_strength" href="#collide_strength">#</a> <i>collide</i>.<b>strength</b>([<i>strength</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js#L82 "Source")
 
 If *strength* is specified, sets the force strength to the specified number in the range [0,1] and returns this force. If *strength* is not specified, returns the current strength which defaults to 0.7.
+
+如果强度 *strength* 指定，设定力强度，以在范围[0,1]指定数量，并返回该力。如果未指定*strength*，则返回默认为0.7的当前强度。
 
 Overlapping nodes are resolved through iterative relaxation. For each node, the other nodes that are anticipated to overlap at the next tick (using the anticipated positions ⟨*x* + *vx*,*y* + *vy*⟩) are determined; the node’s velocity is then modified to push the node out of each overlapping node. The change in velocity is dampened by the force’s strength such that the resolution of simultaneous overlaps can be blended together to find a stable solution.
 
