@@ -58,26 +58,26 @@ var simulation = d3.forceSimulation(nodes);
 
 此方法不会调度[events](#simulation_on) ; 只有在[creation](#forceSimulation)时自动启动模拟或通过调用[*simulation*.restart](#simulation_restart)时，内部计时器才会调度事件。当模拟开始蜱的自然数是⌈*log*([*alphaMin*](#simulation_alphaMin)) / *log*(1 - [*alphaDecay*](#simulation_alphaDecay))⌉; 默认情况下，这是300。
 
-这种方法可以结合使用与[*simulation*.stop](#simulation_stop)来计算[static force layout](https://bl.ocks.org/mbostock/1667139)。对于大型图形，应在[Web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16)中计算静态布局，以避免冻结用户界面
+这种方法可以结合使用与[*simulation*.stop](#simulation_stop)来计算[static force layout](https://bl.ocks.org/mbostock/1667139)。对于大型图形，应在[Web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16)中计算静态布局，以避免冻结用户界面。
 
 <a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L94 "Source")
 
-If *nodes* is specified, sets the simulation’s nodes to the specified array of objects, initializing their positions and velocities if necessary, and then [re-initializes](#force_initialize) any bound [forces](#simulation_force); returns the simulation. If *nodes* is not specified, returns the simulation’s array of nodes as specified to the [constructor](#forceSimulation).
+如果*nodes* 被指定时，将仿真的节点到指定对象数组，初始化它们的位置，并且如果必要的速度，然后[re-initializes](#force_initialize)任何[forces](#simulation_force) ; 返回模拟。如果未指定*nodes*，则返回指定给[constructor](#forceSimulation)的模拟节点数组。
 
-Each *node* must be an object. The following properties are assigned by the simulation:
+每个*node*必须是一个对象。模拟分配以下属性：
 
-* `index` - the node’s zero-based index into *nodes*
-* `x` - the node’s current *x*-position
-* `y` - the node’s current *y*-position
-* `vx` - the node’s current *x*-velocity
-* `vy` - the node’s current *y*-velocity
+* `index` - *nodes*的从零开始的索引节点
+* `x` - 节点的当前x位置
+* `y` - 节点的当前y位置
+* `vx` - 节点的当前x速度
+* `vy` - 节点的当前y速度
 
-The position ⟨*x*,*y*⟩ and velocity ⟨*vx*,*vy*⟩ may be subsequently modified by [forces](#forces) and by the simulation. If either *vx* or *vy* is NaN, the velocity is initialized to ⟨0,0⟩. If either *x* or *y* is NaN, the position is initialized in a [phyllotaxis arrangement](http://bl.ocks.org/mbostock/11478058), so chosen to ensure a deterministic, uniform distribution around the origin.
+位置⟨*x*,*y*⟩和速度velocity⟨*vx*,*vy*⟩可以随后通过改变[forces](#forces)和由模拟。如果*vx*或*vy*是NaN，则速度初始化为⟨0.0⟩。如果*x*或*y*是NaN，则位置以[phyllotaxis arrangement](http://bl.ocks.org/mbostock/11478058)初始化，因此选择该位置以确保在原点周围的确定的均匀分布。
 
-To fix a node in a given position, you may specify two additional properties:
+要在给定位置修复节点，您可以指定另外两个属性：
 
-* `fx` - the node’s fixed *x*-position
-* `fy` - the node’s fixed *y*-position
+* `fx` - 节点的固定x位置
+* `fy` - 节点的固定y位置
 
 At the end of each [tick](#simulation_tick), after the application of any forces, a node with a defined *node*.fx has *node*.x reset to this value and *node*.vx set to zero; likewise, a node with a defined *node*.fy has *node*.y reset to this value and *node*.vy set to zero. To unfix a node that was previously fixed, set *node*.fx and *node*.fy to null, or delete these properties.
 
