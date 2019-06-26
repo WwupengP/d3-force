@@ -99,7 +99,8 @@ alpha衰减率决定了当前alpha插入所需[target *alpha*]的速度 ; 由于
 
 <a name="simulation_alphaTarget" href="#simulation_alphaTarget">#</a> <i>simulation</i>.<b>alphaTarget</b>([<i>target</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L110 "Source")
 
-If *target* is specified, sets the current target [*alpha*](#simulation_alpha) to the specified number in the range [0,1] and returns this simulation. If *target* is not specified, returns the current target alpha value, which defaults to 0.
+如果指定*target*，将当前的目标的[*alpha*](#simulation_alpha)到指定数目的范围为[0,1]，并返回该仿真。
+如果未指定*target*，则返回当前目标alpha值，默认值为0。
 
 <a name="simulation_velocityDecay" href="#simulation_velocityDecay">#</a> <i>simulation</i>.<b>velocityDecay</b>([<i>decay</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L114 "Source")
 
