@@ -2,17 +2,17 @@
 
 This module implements a [velocity Verlet](https://en.wikipedia.org/wiki/Verlet_integration) numerical integrator for simulating physical forces on particles. The simulation is simplified: it assumes a constant unit time step Δ*t* = 1 for each step, and a constant unit mass *m* = 1 for all particles. As a result, a force *F* acting on a particle is equivalent to a constant acceleration *a* over the time interval Δ*t*, and can be simulated simply by adding to the particle’s velocity, which is then added to the particle’s position.
 
-该模块实现了一个[速度Verlet](https://en.wikipedia.org/wiki/Verlet_integration)数值积分器，用于模拟粒子上的物理力。模拟被简化：它假定每个步骤的恒定单位时间步长Δt = 1，并且对于所有颗粒，恒定单位质量m = 1。结果，作用在粒子上的力F相当于在时间间隔Δt内的恒定加速度a，并且可以简单地通过增加粒子的速度来模拟，然后将其加到粒子的位置。
+该模块实现了一个[速度Verlet](https://en.wikipedia.org/wiki/Verlet_integration)数值积分器，用于模拟粒子上的物理力。模拟被简化：它假定每个步骤的恒定单位时间步长 **Δt = 1** ，并且对于所有颗粒，恒定单位质量 **m= 1** 。结果，作用在粒子上的力 **F** 相当于在时间间隔 **Δt** 内的恒定加速度 **a** ，并且可以简单地通过增加粒子的速度来模拟，然后将其加到粒子的位置。
 
 In the domain of information visualization, physical simulations are useful for studying [networks](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048) and [hierarchies](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37)!
 
-在信息可视化领域，物理模拟对于研究[网络](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048)和[层次结构](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37)非常有用！
+在信息可视化领域，物理模拟对于研究 [网络](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048) 和 [层次结构](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37) 非常有用！
 
 [<img alt="Force Dragging III" src="https://raw.githubusercontent.com/d3/d3-force/master/img/graph.png" width="420" height="219">](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048)[<img alt="Force-Directed Tree" src="https://raw.githubusercontent.com/d3/d3-force/master/img/tree.png" width="420" height="219">](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37)
 
 You can also simulate circles (disks) with collision, such as for [bubble charts](http://www.nytimes.com/interactive/2012/09/06/us/politics/convention-word-counts.html) or [beeswarm plots](http://bl.ocks.org/mbostock/6526445e2b44303eebf21da3b6627320):
 
-您还可以模拟碰撞的圆圈（磁盘），例如[气泡图](http://www.nytimes.com/interactive/2012/09/06/us/politics/convention-word-counts.html)或[贝壳图](http://bl.ocks.org/mbostock/6526445e2b44303eebf21da3b6627320)：
+您还可以模拟碰撞的圆圈（磁盘），例如 [气泡图](http://www.nytimes.com/interactive/2012/09/06/us/politics/convention-word-counts.html) 或 [贝壳图](http://bl.ocks.org/mbostock/6526445e2b44303eebf21da3b6627320) ：
 
 [<img alt="Collision Detection" src="https://raw.githubusercontent.com/d3/d3-force/master/img/collide.png" width="420" height="219">](http://bl.ocks.org/mbostock/31ce330646fa8bcb7289ff3b97aab3f5)[<img alt="Beeswarm" src="https://raw.githubusercontent.com/d3/d3-force/master/img/beeswarm.png" width="420" height="219">](http://bl.ocks.org/mbostock/6526445e2b44303eebf21da3b6627320)
 
@@ -24,13 +24,13 @@ You can even use it as a rudimentary physics engine, say to simulate cloth:
 
 To use this module, create a [simulation](#simulation) for an array of [nodes](#simulation_nodes), and compose the desired [forces](#simulation_force). Then [listen](#simulation_on) for tick events to render the nodes as they update in your preferred graphics system, such as Canvas or SVG.
 
-要使用此模块，请为[nodes](#simulation_nodes)数组创建[simulation](#simulation)，并组合所需的[forces](#simulation_force)。然后[listen](#simulation_on) tick事件，以便在首选图形系统（如Canvas或SVG）中更新节点时对其进行渲染。
+要使用此模块，请为节点 [nodes](#simulation_nodes) 数组创建模拟器 [simulation](#simulation) ，并组合所需的力 [forces](#simulation_force)。然后 [监听](#simulation_on) tick事件，以便在首选图形系统（如Canvas或SVG）中更新节点时对其进行渲染。
 
 ## Installing
 
 If you use NPM, `npm install d3-force`. Otherwise, download the [latest release](https://github.com/d3/d3-force/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-force.v2.min.js) or as part of [D3](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3_force` global is exported:
 
-如果您使用NPM， `npm install d3-force`。否则，请下载[最新版本](https://github.com/d3/d3-force/releases/latest)。您也可以直接从[d3js.org](https://d3js.org)加载，作为[独立库](https://d3js.org/d3-force.v2.min.js)或作为[D3 4.0](https://github.com/d3/d3)的一部分。支持AMD，CommonJS和vanilla环境。在vanilla中，export了一个全局变量`d3_force`：
+如果您使用NPM， `npm install d3-force` 。否则，请下载 [最新版本](https://github.com/d3/d3-force/releases/latest) 。您也可以直接从 [d3js.org](https://d3js.org) 加载，作为 [独立库](https://d3js.org/d3-force.v2.min.js) 或作为 [D3 4.0](https://github.com/d3/d3) 的一部分。支持AMD，CommonJS和vanilla环境。在vanilla中，export了一个全局变量 `d3_force` ：
 
 ```html
 <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
@@ -56,7 +56,9 @@ var simulation = d3.forceSimulation(nodes);
 
 Creates a new simulation with the specified array of [*nodes*](#simulation_nodes) and no [forces](#simulation_force). If *nodes* is not specified, it defaults to the empty array. The simulator [starts](#simulation_restart) automatically; use [*simulation*.on](#simulation_on) to listen for tick events as the simulation runs. If you wish to run the simulation manually instead, call [*simulation*.stop](#simulation_stop), and then call [*simulation*.tick](#simulation_tick) as desired.
 
-使用指定的[*nodes*](#simulation_nodes)数组创建新模拟，但没有[forces](#simulation_force)。如果未指定*nodes*，则默认为空数组。模拟器自动[starts](#simulation_restart) ; 在模拟器运行时使用[*simulation*.on](#simulation_on)监听tick事件。如果您希望手动运行模拟，请调用[*simulation*.stop](#simulation_stop)，然后根据需要调用[*simulation*.tick](#simulation_tick)。
+使用指定的节点数组 [**nodes**](#simulation_nodes) 创建新模拟，但没有 [forces](#simulation_force) 。
+如果未指定 **nodes** ，则默认为空数组。
+模拟器自动启动[starts](#simulation_restart) ; 在模拟器运行时使用[*simulation*.on](#simulation_on)监听tick事件。如果您希望手动运行模拟，请调用[*simulation*.stop](#simulation_stop)，然后根据需要调用[*simulation*.tick](#simulation_tick)。
 
 <a name="simulation_restart" href="#simulation_restart">#</a> <i>simulation</i>.<b>restart</b>() [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L86 "Source")
 
