@@ -638,11 +638,17 @@ The *y*-accessor is invoked for each [node](#simulation_nodes) in the simulation
 
 Creates a new positioning force towards a circle of the specified [*radius*](#radial_radius) centered at ⟨[*x*](#radial_x),[*y*](#radial_y)⟩. If *x* and *y* are not specified, they default to ⟨0,0⟩.
 
+创建朝指定的圆一个新的定位力半径 [*radius*](#radial_radius)  在中心⟨[*x*](#radial_x),[*y*](#radial_y)⟩。如果未指定*x* 和 *y*，则默认为⟨0,0⟩。
+
 <a name="radial_strength" href="#radial_strength">#</a> <i>radial</i>.<b>strength</b>([<i>strength</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/radial.js "Source")
 
 If *strength* is specified, sets the strength accessor to the specified number or function, re-evaluates the strength accessor for each node, and returns this force. The *strength* determines how much to increment the node’s *x*- and *y*-velocity. For example, a value of 0.1 indicates that the node should move a tenth of the way from its current position to the closest point on the circle with each application. Higher values moves nodes more quickly to the target position, often at the expense of other forces or constraints. A value outside the range [0,1] is not recommended.
 
+如果强度 *strength* 指定，设定强度存取到指定的数或功能，重新评估每个节点的强度存取，并返回该力。*strength*决定了有多少递增节点的*x*-和*y*-velocity。例如，值为0.1表示节点应该从每个应用程序的当前位置移动到圆上最近点的十分之一。较高的值会更快地将节点移动到目标位置，通常以其他力或约束为代价。不建议超出范围[0,1]的值。
+
 If *strength* is not specified, returns the current strength accessor, which defaults to:
+
+如果未指定 *strength* ，则返回当前强度访问器，默认为：
 
 ```js
 function strength() {
@@ -652,16 +658,27 @@ function strength() {
 
 The strength accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the strength of each node is only recomputed when the force is initialized or when this method is called with a new *strength*, and not on every application of the force.
 
+为模拟中的每个节点 [node](#simulation_nodes) 调用强度访问器，传递节点 *node* 及其从零开始的索引 *index*。然后在内部存储得到的数字，使得每个节点的强度仅在初始化力时或者以新的 *strength* 调用该方法时重新计算，而不是在力的每个应用上调用。
+
 <a name="radial_radius" href="#radial_radius">#</a> <i>radial</i>.<b>radius</b>([<i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/radial.js "Source")
 
 If *radius* is specified, sets the circle *radius* to the specified number or function, re-evaluates the *radius* accessor for each node, and returns this force. If *radius* is not specified, returns the current *radius* accessor.
 
+如果半径 *radius* 指定，设置圆半径 *radius* 为指定的数目或函数，重新评估半径 *radius* 为每个节点访问，并返回该力。
+如果未指定 *radius*，则返回当前半径访问器。
+
 The *radius* accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the target radius of each node is only recomputed when the force is initialized or when this method is called with a new *radius*, and not on every application of the force.
+
+的半径访问器为每个节点 [node](#simulation_nodes) 在该模拟中，正在传递的节点 *node* 和它的基于0的索引 *index*。然后在内部存储得到的数字，使得每个节点的目标半径仅在初始化力时或者在使用新半径 *radius* 调用此方法时重新计算，而不是在力的每个应用上调用。
 
 <a name="radial_x" href="#radial_x">#</a> <i>radial</i>.<b>x</b>([<i>x</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/radial.js "Source")
 
 If *x* is specified, sets the *x*-coordinate of the circle center to the specified number and returns this force. If *x* is not specified, returns the current *x*-coordinate of the center, which defaults to zero.
 
+如果 *x* 指定，设置X圆心到指定号码-协调并返回此力。如果未指定x，则返回中心的当前x -coordinate，默认为零。
+
 <a name="radial_y" href="#radial_y">#</a> <i>radial</i>.<b>y</b>([<i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/radial.js "Source")
 
 If *y* is specified, sets the *y*-coordinate of the circle center to the specified number and returns this force. If *y* is not specified, returns the current *y*-coordinate of the center, which defaults to zero.
+
+如果*y* 指定，设置ÿ圆心到指定号码-协调并返回此力。如果未指定y，则返回中心的当前y坐标，默认为零。
