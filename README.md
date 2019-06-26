@@ -79,23 +79,23 @@ var simulation = d3.forceSimulation(nodes);
 * `fx` - 节点的固定x位置
 * `fy` - 节点的固定y位置
 
-At the end of each [tick](#simulation_tick), after the application of any forces, a node with a defined *node*.fx has *node*.x reset to this value and *node*.vx set to zero; likewise, a node with a defined *node*.fy has *node*.y reset to this value and *node*.vy set to zero. To unfix a node that was previously fixed, set *node*.fx and *node*.fy to null, or delete these properties.
+在每个[tick](#simulation_tick)结束时，在应用任何强制之后，具有已定义*node*.fx的节点将*node*.x重置为此值并将*node*.vx设置为零; 同样，具有已定义节点的*node*.fy将*node*.y重置为此值，将节点 *node*.vy设置为零。要解除先前修复的节点，请将node .fx和node .fy设置为null，或删除这些属性。
 
-If the specified array of *nodes* is modified, such as when nodes are added to or removed from the simulation, this method must be called again with the new (or changed) array to notify the simulation and bound forces of the change; the simulation does not make a defensive copy of the specified array.
+如果修改了指定的*nodes*数组，例如在模拟中添加或删除节点时，必须使用新的（或更改的）数组再次调用此方法，以通知模拟和绑定的更改力; 模拟不会生成指定数组的防御副本。
 
 <a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L98 "Source")
 
-If *alpha* is specified, sets the current alpha to the specified number in the range [0,1] and returns this simulation. If *alpha* is not specified, returns the current alpha value, which defaults to 1.
+如果*alpha* 指定，将当前的α到指定数目的范围为[0,1]，并返回该仿真。如果未指定*alpha*，则返回当前alpha值，默认值为1。
 
 <a name="simulation_alphaMin" href="#simulation_alphaMin">#</a> <i>simulation</i>.<b>alphaMin</b>([<i>min</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L102 "Source")
 
-If *min* is specified, sets the minimum *alpha* to the specified number in the range [0,1] and returns this simulation. If *min* is not specified, returns the current minimum *alpha* value, which defaults to 0.001. The simulation’s internal timer stops when the current [*alpha*](#simulation_alpha) is less than the minimum *alpha*. The default [alpha decay rate](#simulation_alphaDecay) of ~0.0228 corresponds to 300 iterations.
+如果指定了*min*，则将最小*alpha*设置为[0,1]范围内的指定数字并返回此模拟。如果未指定*min*，则返回当前最小*alpha*值，默认值为0.001。当前[*alpha*](#simulation_alpha)小于最小*alpha*时，模拟的内部计时器停止。默认的 [alpha decay rate](#simulation_alphaDecay) ~0.0228对应于300次迭代。
 
 <a name="simulation_alphaDecay" href="#simulation_alphaDecay">#</a> <i>simulation</i>.<b>alphaDecay</b>([<i>decay</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L106 "Source")
 
-If *decay* is specified, sets the [*alpha*](#simulation_alpha) decay rate to the specified number in the range [0,1] and returns this simulation. If *decay* is not specified, returns the current *alpha* decay rate, which defaults to 0.0228… = 1 - *pow*(0.001, 1 / 300) where 0.001 is the default [minimum *alpha*](#simulation_alphaMin).
+如果*decay*指定，设置[*alpha*](#simulation_alpha)衰减率在范围[0,1]指定数量，并返回该仿真。如果未指定*decay*，则返回当前的*alpha*衰减率，默认为0.0228 ... = 1 - pow（0.001,1 / 300），其中0.001是默认的[minimum *alpha*](#simulation_alphaMin)。
 
-The alpha decay rate determines how quickly the current alpha interpolates towards the desired [target *alpha*](#simulation_alphaTarget); since the default target *alpha* is zero, by default this controls how quickly the simulation cools. Higher decay rates cause the simulation to stabilize more quickly, but risk getting stuck in a local minimum; lower values cause the simulation to take longer to run, but typically converge on a better layout. To have the simulation run forever at the current *alpha*, set the *decay* rate to zero; alternatively, set a [target *alpha*](#simulation_alphaTarget) greater than the [minimum *alpha*](#simulation_alphaMin).
+alpha衰减率决定了当前alpha插入所需[target *alpha*]的速度 ; 由于默认目标*alpha*为零，因此默认情况下它控制模拟冷却的速度。较高的衰减率会使模拟更快地稳定，但有可能陷入局部最小值; 较低的值会导致模拟运行时间更长，但通常会收敛到更好的布局。要使模拟永远在当前alpha运行，请将衰减率设置为零; 或者，将[target *alpha*](#simulation_alphaTarget)设置为大于[minimum *alpha*](#simulation_alphaMin)。
 
 <a name="simulation_alphaTarget" href="#simulation_alphaTarget">#</a> <i>simulation</i>.<b>alphaTarget</b>([<i>target</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L110 "Source")
 
