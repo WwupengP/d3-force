@@ -258,7 +258,7 @@ See [*dispatch*.on](https://github.com/d3/d3-dispatch#dispatch_on) for details.
 
 A *force* is simply a function that modifies nodes’ positions or velocities; in this context, a *force* can apply a classical physical force such as electrical charge or gravity, or it can resolve a geometric constraint, such as keeping nodes within a bounding box or keeping linked nodes a fixed distance apart. For example, a simple positioning force that moves nodes towards the origin ⟨0,0⟩ might be implemented as:
 
-*force*仅仅是修改节点的位置或速度的函数; 在这种情况下，*force*可以施加经典物理力，例如电荷或重力，或者它可以解决几何约束，例如将节点保持在边界框内或保持链接节点相隔固定距离。例如，将节点移向原点⟨0,0⟩ 的简单定位力可以实现为：
+**force** 仅仅是修改节点的位置或速度的函数; 在这种情况下， **force** 可以施加经典物理力，例如电荷或重力，或者它可以解决几何约束，例如将节点保持在边界框内或保持链接节点相隔固定距离。例如，将节点移向原点⟨0,0⟩ 的简单定位力可以实现为：
 
 ```js
 function force(alpha) {
@@ -272,75 +272,85 @@ function force(alpha) {
 
 Forces typically read the node’s current position ⟨*x*,*y*⟩ and then add to (or subtract from) the node’s velocity ⟨*vx*,*vy*⟩. However, forces may also “peek ahead” to the anticipated next position of the node, ⟨*x* + *vx*,*y* + *vy*⟩; this is necessary for resolving geometric constraints through [iterative relaxation](https://en.wikipedia.org/wiki/Relaxation_\(iterative_method\)). Forces may also modify the position directly, which is sometimes useful to avoid adding energy to the simulation, such as when recentering the simulation in the viewport.
 
-Forces典型地读取的节点的当前位置⟨*x*,*y*⟩然后添加至（或减去）该节点的速度 ⟨*vx*,*vy*⟩。然而，力也可“预测”到节点的预期下一个位置⟨*x* + *vx*,*y* + *vy*⟩; 这对于通过迭代松弛[iterative relaxation](https://en.wikipedia.org/wiki/Relaxation_\(iterative_method\))来解决几何约束是必要的。力也可以直接修改位置，这有时可以避免向模拟添加能量，例如在视口中重新定位模拟时。
+Forces典型地读取的节点的当前位置 **⟨x,y⟩** 然后添加至（或减去）该节点的速度 **⟨vx,vy⟩** 。然而，力也可“预测”到节点的预期下一个位置 **⟨x + vx,y + vy⟩** ; 这对于通过迭代松弛算法 [iterative relaxation](https://en.wikipedia.org/wiki/Relaxation_\(iterative_method\)) 来解决几何约束是必要的。force也可以直接修改位置，这有时可以避免向模拟添加能量，例如在视口中重新定位模拟时。
 
 Simulations typically compose multiple forces as desired. This module provides several for your enjoyment:
 
 Simulations通常根据需要组成多个forces。这个模块提供了几个供您选择：
 
-* [Centering](#centering)
-* [Collision](#collision)
-* [Links](#links)
-* [Many-Body](#many-body)
-* [Positioning](#positioning)
+* 定心力 [Centering](#centering)
+* 碰撞力 [Collision](#collision)
+* 链接 [Links](#links)
+* 多体力 [Many-Body](#many-body)
+* 定位力 [Positioning](#positioning)
 
 Forces may optionally implement [*force*.initialize](#force_initialize) to receive the simulation’s array of nodes.
 
-Forces可以选择实现[*force*.initialize](#force_initialize)来接收模拟的节点数组。
+Forces可以选择实现 **[force.initialize](#force_initialize)** 来接收模拟的节点数组。
 
 <a name="_force" href="#_force">#</a> <i>force</i>(<i>alpha</i>) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L47 "Source")
 
 Applies this force, optionally observing the specified *alpha*. Typically, the force is applied to the array of nodes previously passed to [*force*.initialize](#force_initialize), however, some forces may apply to a subset of nodes, or behave differently. For example, [d3.forceLink](#links) applies to the source and target of each link.
 
-应用force，可选择观察指定的*alpha*。通常，力被应用于先前传递给[*force*.initialize](#force_initialize)的节点阵列，然而，一些力可能应用于节点的子集，或者表现不同。例如，[d3.forceLink](#links)适用于每个链接的源和目标。
+应用force，可选择观察指定的 **alpha** 。通常，force被应用于先前传递给 **[force.initialize](#force_initialize)** 的节点阵列，然而，一些力可能应用于节点的子集，或者表现不同。例如， [d3.forceLink](#links) 适用于每个链接的源和目标。
 
 <a name="force_initialize" href="#force_initialize">#</a> <i>force</i>.<b>initialize</b>(<i>nodes</i>) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L77 "Source")
 
 Assigns the array of *nodes* to this force. This method is called when a force is bound to a simulation via [*simulation*.force](#simulation_force) and when the simulation’s nodes change via [*simulation*.nodes](#simulation_nodes). A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
 
-将*nodes*数组分配给此力。当通过[*simulation*.force](#simulation_force)将力绑定到模拟时以及当模拟节点通过[*simulation*.nodes](#simulation_nodes)更改时，将调用此方法。力可以在初始化期间执行必要的工作，例如评估每个节点参数，以避免在每次施加力期间重复执行工作。
+将 **nodes** 数组分配给此force。当通过 **[simulation.force](#simulation_force)** 将力绑定到模拟器时以及当模拟节点通过 **[simulation.nodes](#simulation_nodes)** 更改时，将调用此方法。force可以在初始化期间执行必要的工作，例如评估每个节点参数，以避免在每次施加力期间重复执行工作。
 
 #### Centering
 
 The centering force translates nodes uniformly so that the mean position of all nodes (the center of mass if all nodes have equal weight) is at the given position ⟨[*x*](#center_x),[*y*](#center_y)⟩. This force modifies the positions of nodes on each application; it does not modify velocities, as doing so would typically cause the nodes to overshoot and oscillate around the desired center. This force helps keeps nodes in the center of the viewport, and unlike the [positioning force](#positioning), it does not distort their relative positions.
 
-定心力转换节点均匀，使得所有节点的平均位置（重心如果所有节点都具有相同的权重）是在给定位置⟨[*x*](#center_x),[*y*](#center_y)⟩。该力修改每个应用程序上节点的位置; 它不会改变速度，因为这样做通常会导致节点过冲并围绕所需的中心振荡。此力有助于将节点保持在视口的中心，与定位力[positioning force](#positioning)不同，它不会扭曲它们的相对位置。
+定心力转换节点均匀，使得所有节点的平均位置（重心如果所有节点都具有相同的权重）是在给定位置 **⟨[x](#center_x),[y](#center_y)⟩** 。该力修改每个应用程序上节点的位置; 它不会改变速度，因为这样做通常会导致节点过冲并围绕所需的中心振荡。此力有助于将节点保持在视口的中心，与定位力 [positioning force](#positioning) 不同，它不会扭曲它们的相对位置。
 
 <a name="forceCenter" href="#forceCenter">#</a> d3.<b>forceCenter</b>([<i>x</i>, <i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L1 "Source")
 
 Creates a new centering force with the specified [*x*-](#center_x) and [*y*-](#center_y) coordinates. If *x* and *y* are not specified, they default to ⟨0,0⟩.
 
-创建具有指定一个新的定心力[*x*-](#center_x)和[*y*-](#center_y)坐标。如果未指定*x* 和 *y*，则默认为⟨0,0⟩。
+创建具有指定一个新的定心力 **[x-](#center_x)和[y-](#center_y)** 坐标。
+
+如果未指定 **x** 和 **y**，则默认为⟨0,0⟩。
 
 <a name="center_x" href="#center_x">#</a> <i>center</i>.<b>x</b>([<i>x</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L27 "Source")
 
 If *x* is specified, sets the *x*-coordinate of the centering position to the specified number and returns this force. If *x* is not specified, returns the current *x*-coordinate, which defaults to zero.
 
-如果*x*指定，设置*x*的中心位置到指定号码，并返回这股力量-协调。如果未指定*x*，则返回当前*x*坐标，默认为0。
+如果 **x** 指定，设置中心位置的 **x** 为指定数，并返回force。
+
+如果未指定 **x** ，则返回当前 **x** 坐标，默认为0。
 
 <a name="center_y" href="#center_y">#</a> <i>center</i>.<b>y</b>([<i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L31 "Source")
 
 If *y* is specified, sets the *y*-coordinate of the centering position to the specified number and returns this force. If *y* is not specified, returns the current *y*-coordinate, which defaults to zero.
 
-如果 *y* 指定，设置 *y* 居中位置到指定数量的-协调并返回此力。如果未指定*y*，则返回当前*y*坐标，默认为0。
+如果 **y** 指定，设置中心位置的 **y** 为指定数，并返回force。
+
+如果未指定 **y** ，则返回当前 **y** 坐标，默认为0。
 
 #### Collision
 
 The collision force treats nodes as circles with a given [radius](#collide_radius), rather than points, and prevents nodes from overlapping. More formally, two nodes *a* and *b* are separated so that the distance between *a* and *b* is at least *radius*(*a*) + *radius*(*b*). To reduce jitter, this is by default a “soft” constraint with a configurable [strength](#collide_strength) and [iteration count](#collide_iterations).
 
-碰撞力将节点视为具有给定半径[radius](#collide_radius)而不是点的圆，并防止节点重叠。更正式地，两个节点*a* 和 *b*被分开，使得*a* 和 *b*之间的距离至少是*radius*(*a*) + *radius*(*b*)。为了减少抖动，默认情况下这是一个具有可配置强度[strength](#collide_strength)和迭代计数[iteration count](#collide_iterations)的“软”约束。
+碰撞力将节点视为具有给定半径 [radius](#collide_radius) 而不是点的圆，并防止节点重叠。更正式地，两个节点 **a** 和 **b** 被分开，使得 **a** 和 **b**之间的距离至少是 **radius(a) + radius(b)** 。为了减少抖动，默认情况下这是一个具有可配置强度 [strength](#collide_strength) 和迭代步数 [iteration count](#collide_iterations) 的“软”约束。
 
 <a name="forceCollide" href="#forceCollide">#</a> d3.<b>forceCollide</b>([<i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js "Source")
 
 Creates a new circle collision force with the specified [*radius*](#collide_radius). If *radius* is not specified, it defaults to the constant one for all nodes.
 
-创建具有指定半径的新圆碰撞力。如果未指定radius，则默认为所有节点的常量。
+创建具有指定半径 [**radius**](#collide_radius) 的新圆碰撞力。
+
+如果未指定 **radius** ，则默认为所有节点的常量。
 
 <a name="collide_radius" href="#collide_radius">#</a> <i>collide</i>.<b>radius</b>([<i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js#L86 "Source")
 
 If *radius* is specified, sets the radius accessor to the specified number or function, re-evaluates the radius accessor for each node, and returns this force. If *radius* is not specified, returns the current radius accessor, which defaults to:
 
-如果 *radius* 指定，设定 *radius* 存取到指定的数或功能，重新评估每个节点的半径存取，并返回该力。如果未指定 *radius* ，则返回当前半径访问器，默认为：
+如果 **radius** 指定，设定 **radius** 访问器到指定的数值或函数，重新评估每个节点的半径访问器，并返回force。
+
+如果未指定 **radius** ，则返回当前半径访问器，默认为：
 
 ```js
 function radius() {
@@ -350,23 +360,27 @@ function radius() {
 
 The radius accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the radius of each node is only recomputed when the force is initialized or when this method is called with a new *radius*, and not on every application of the force.
 
-为模拟中的每个节点[node](#simulation_nodes)调用radius访问器，传递节点*node*及其从零开始的索引*index*。然后将结果数存储在内部，这样每个节点的半径仅在初始化力时或者使用新*radius*调用此方法时重新计算，而不是在力的每个应用上调用。
+为模拟器中的每个节点 [node](#simulation_nodes) 调用 radius 访问器，传递节点 **node** 及其从0开始的索引 **index**。然后将结果数存储在内部，这样每个节点的半径仅在初始化力时或者使用新 **radius** 调用此方法时重新计算，而不是在力的每个应用上调用。
 
 <a name="collide_strength" href="#collide_strength">#</a> <i>collide</i>.<b>strength</b>([<i>strength</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js#L82 "Source")
 
 If *strength* is specified, sets the force strength to the specified number in the range [0,1] and returns this force. If *strength* is not specified, returns the current strength which defaults to 0.7.
 
-如果强度 *strength* 指定，设定力强度，以在范围[0,1]指定数量，并返回该力。如果未指定*strength*，则返回默认为0.7的当前强度。
+如果强度 **strength** 指定，设定 **strength**为范围[0,1]之间的指定数，并返回force。
+
+如果未指定 **strength** ，则返回当前 **strength** ， 默认为0.7。
 
 Overlapping nodes are resolved through iterative relaxation. For each node, the other nodes that are anticipated to overlap at the next tick (using the anticipated positions ⟨*x* + *vx*,*y* + *vy*⟩) are determined; the node’s velocity is then modified to push the node out of each overlapping node. The change in velocity is dampened by the force’s strength such that the resolution of simultaneous overlaps can be blended together to find a stable solution.
 
-通过迭代松弛解决重叠节点。对于每个节点，可预期其他节点在下一tick（使用预期位置⟨*x* + *vx*,*y* + *vy*⟩）被确定; 然后修改节点的速度以将节点推出每个重叠节点。力的变化受到力的强度的抑制，使得同时重叠的分辨率可以混合在一起以找到稳定的解。
+通过迭代松弛解决重叠节点。对于每个节点，可预期其他节点在下一个tick中的位置重叠（使用预期位置 **⟨x + vx,y + vy⟩** ）; 然后修改节点的速度以将节点推出每个重叠节点。force的变化受到 force **strength** 的抑制，使得同时重叠的分辨率可以混合在一起以找到稳定的解。
 
 <a name="collide_iterations" href="#collide_iterations">#</a> <i>collide</i>.<b>iterations</b>([<i>iterations</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js#L78 "Source")
 
 If *iterations* is specified, sets the number of iterations per application to the specified number and returns this force. If *iterations* is not specified, returns the current iteration count which defaults to 1. Increasing the number of iterations greatly increases the rigidity of the constraint and avoids partial overlap of nodes, but also increases the runtime cost to evaluate the force.
 
-如果 *iterations* 指定，设置每个应用迭代到指定号码的数量和返回这股力量。如果未指定 *iterations* ，则返回默认为1的当前迭代计数。增加迭代次数会大大增加约束的刚性并避免节点的部分重叠，但也会增加运行时成本以评估力。
+如果迭代步数 **iterations** 指定，设置每个应用的迭代到的数值并返回force。
+
+如果未指定 **iterations** ，则返回当前迭代计数， 默认值为1。增加迭代次数会大大增加约束的刚性并避免节点的部分重叠，但也会增加运行时成本以评估力。
 
 #### Links
 
